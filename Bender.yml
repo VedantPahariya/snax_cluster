@@ -423,6 +423,10 @@ sources:
     files:
       - target/snitch_cluster/generated/snax_KUL_cluster_wrapper.sv
 
+  - target: snax_gemmx_cluster
+    files:
+      - target/snitch_cluster/generated/snax_gemmx_cluster_wrapper.sv
+
   - target: snax_versacore_to_cluster
     files:
       - target/snitch_cluster/generated/snax_versacore_to_cluster_wrapper.sv
