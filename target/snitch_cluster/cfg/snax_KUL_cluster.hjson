@@ -159,29 +159,29 @@ Naming convention:
             bender_target:
             [
                 snax_KUL_cluster_xdma
-            ]
-            cfg_io_width: 32
-            max_multicast: 16
-            max_dimension: 5
+            ],
+            cfg_io_width: 32,
+            max_multicast: 16,
+            max_dimension: 5,
             max_mem_size_kiB: 4096,
-            reader_buffer: 12
-            writer_buffer: 12
-            reader_agu_temporal_dimension: 5
-            writer_agu_temporal_dimension: 5
+            reader_buffer: 12,
+            writer_buffer: 12,
+            reader_agu_temporal_dimension: 5,
+            writer_agu_temporal_dimension: 5,
             writer_extensions:
             {
                 HasVerilogMemset: {}
-            }
+            },
             reader_extensions: {
-                HasTransposer: {row:[8,8], col:[8,8], elementWidth:[8,16]}
+                HasTransposer: {row:[8,8], col:[8,8], elementWidth:[8,16]},
                 HasElementwiseAdd: {elementWidth: 32, dataWidth: 512}
             }
-        }
+        },
         // Xdiv_sqrt: true,
-        # isa: "rv32ema",
-        xdma: true
-        xssr: false
-        xfrep: false
+        // isa: "rv32ema",
+        xdma: true,
+        xssr: false,
+        xfrep: false,
         xf16: false,
         xf16alt: false,
         xf8: false,
