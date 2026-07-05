@@ -1,0 +1,109 @@
+// DNN Inference Model Configuration
+// Defines the 2-layer neural network model structure
+
+{
+    kernel: "DNN_Inference"
+    model_name: "conv_sigmoid_matmul_2layer"
+    description: "Simple 2-layer model: Conv(7x7)->Sigmoid->MatMul -> Conv(3x3)->Sigmoid->MatMul"
+
+    // Input/Output specifications
+    input: {
+        height: 128
+        width: 128
+        channels: 1
+    }
+
+    output: {
+        height: 64
+        width: 64
+        channels: 16
+    }
+
+    // Precision: 64 = FP64, 32 = FP32, 16 = FP16, 8 = FP8
+    prec: 64
+
+    // Layer specifications
+    layers: [
+        {
+            index: 0
+            name: "conv1"
+            type: "Conv2d"
+            input_dim: {height: 128, width: 128, channels: 1}
+            output_dim: {height: 64, width: 64, channels: 16}
+            filter: {
+                height: 7
+                width: 7
+                stride: 2
+                padding: 3
+            }
+        },
+        {
+            index: 1
+            name: "sigmoid1"
+            type: "Sigmoid"
+            input_dim: {height: 64, width: 64, channels: 16}
+            output_dim: {height: 64, width: 64, channels: 16}
+        },
+        {
+            index: 2
+            name: "matmul1"
+            type: "MatMul"
+            accelerator: "GEMMX"  // Use hardware accelerator
+            dimensions: {
+                M: 64
+                K: 16
+                N: 64
+            }
+            transpose_a: false
+            transpose_b: false
+            alpha: 0.0
+        },
+        {
+            index: 3
+            name: "conv2"
+            type: "Conv2d"
+            input_dim: {height: 64, width: 64, channels: 16}
+            output_dim: {height: 64, width: 64, channels: 16}
+            filter: {
+                height: 3
+                width: 3
+                stride: 1
+                padding: 1
+            }
+        },
+        {
+            index: 4
+            name: "sigmoid2"
+            type: "Sigmoid"
+            input_dim: {height: 64, width: 64, channels: 16}
+            output_dim: {height: 64, width: 64, channels: 16}
+        },
+        {
+            index: 5
+            name: "matmul2"
+            type: "MatMul"
+            accelerator: "GEMMX"
+            dimensions: {
+                M: 64
+                K: 16
+                N: 64
+            }
+            transpose_a: false
+            transpose_b: false
+            alpha: 0.0
+        }
+    ]
+
+    // Data generation parameters
+    data_gen: {
+        seed: 42
+        input_range: [-1.0, 1.0]
+        weight_range: [-0.5, 0.5]
+    }
+
+    // Testing parameters
+    test: {
+        tolerance: 0.01  // 1% relative error tolerance
+        verify: true     // Verify outputs against golden reference
+    }
+}
