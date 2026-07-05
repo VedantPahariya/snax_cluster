@@ -82,6 +82,7 @@ VLT_BUILDDIR := work-vlt
 VLT_FESVR     = $(VLT_BUILDDIR)/riscv-isa-sim
 ifeq ($(VERILATOR_VERSION), 5)
 	VLT_FLAGS += --timing
+	VLT_FLAGS += --threads $(shell nproc)
 endif
 VLT_FLAGS    += -Wno-BLKANDNBLK
 VLT_FLAGS    += -Wno-LITENDIAN
