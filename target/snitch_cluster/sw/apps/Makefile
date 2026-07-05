@@ -10,6 +10,7 @@ SUBDIRS += nop
 ifneq ($(filter $(SELECT_RUNTIME),rtl banshee),)
 SUBDIRS += blas/axpy
 SUBDIRS += blas/gemm
+ifeq ($(BUILD_DNN_TESTS),1)
 SUBDIRS += dnn/batchnorm
 SUBDIRS += dnn/conv2d
 SUBDIRS += dnn/fusedconv
@@ -19,6 +20,7 @@ SUBDIRS += dnn/layernorm
 SUBDIRS += dnn/linear
 SUBDIRS += dnn/maxpool
 SUBDIRS += dnn/softmax
+endif
 endif
 SUBDIRS += montecarlo/pi_estimation
 SUBDIRS += snax-mac
@@ -32,6 +34,8 @@ SUBDIRS += snax-alu
 SUBDIRS += snax-multi-alu
 endif
 ifeq ($(CFG_OVERRIDE), cfg/snax_KUL_cluster.hjson)
+SUBDIRS += snax-gemmx-matmul
+SUBDIRS += snax-dnn-inference
 SUBDIRS += snax-xdma-memset
 SUBDIRS += snax-xdma-reshape-comparison
 SUBDIRS += snax-xdma-transpose
